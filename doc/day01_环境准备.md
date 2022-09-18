@@ -64,18 +64,20 @@ create external table user_behavior (
     behavior_type int comment "用户行为类型",
     user_geohash String comment "地理位置",
     item_category bigint comment "商品类别id",
-    `time` String comment "时间"
+    date_str String comment "时间"
 )
 row format delimited 
-fields terminated by ",";
+fields terminated by ","
+NULL DEFINED AS "";
 ```
+**注意**：_csv文件中空值用空字符串表示，而在hive中默认用"\N"表示，所以创建表时指定hive表中使用空字符串表示空值  
 &emsp;&emsp;② 向表中导入数据
 ```sql
- load data inpath "/taobao" into table user_behavior;
+load data inpath "/taobao" into table user_behavior;
 ```
 &emsp;&emsp;③ 查看表中数据
 ```sql
 select * from user_behavior limit 10;
 ```
-![查看表中数据](../img/查看user_behavior表中数据.png)
+![查看表中数据](../img/查看表中数据.png)
 **注意**：_表中的time字段所对应数据有问题，需要处理_。
