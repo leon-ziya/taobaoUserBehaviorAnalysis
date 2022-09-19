@@ -17,7 +17,9 @@
 #### 1）用户数量、成交用户数量
 ① 统计用户数量
 ```sql
-
+select
+    count(distinct user_id) as `用户数量`
+from user_behavior01;
 ```
 ![用户数量](../img/用户数量.png)
 ② 统计成交用户数量
