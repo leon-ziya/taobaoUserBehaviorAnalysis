@@ -66,4 +66,36 @@ select
 from user_behavior01
 group by ymd;
 
+-- 统计用户数量和成交用户数量
+select
+    count(distinct user_id) as `用户数量`
+from user_behavior01;
+-- 支付类型用4表示
+select
+    count(distinct user_id) as `支付用户数量`
+from user_behavior01 where behavior_type=4;
 
+
+-- 计算成交用户占比
+select
+    concat(round((
+              select
+                  count(distinct user_id) as `支付用户数量`
+              from user_behavior01 where behavior_type=4
+          ) / (
+              select
+                  count(distinct user_id) as `用户数量`
+              from user_behavior01
+          ),4)*100,"%") as `成交用户占比`;
+
+select
+    round(
+        select
+
+        from (
+            select
+                sum(if(behavior_type=4,1,0)) as userBy,
+                sum(1) as user
+            from user_behavior01
+            ) t1
+        )
