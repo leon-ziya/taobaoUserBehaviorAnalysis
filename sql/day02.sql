@@ -99,3 +99,10 @@ select
             from user_behavior01
             ) t1
         )
+-- 统计每日pv
+select
+    ymd as `日期`,
+    count(user_id) as `PV访问量`
+from user_behavior01
+group by ymd
+order by ymd ;
