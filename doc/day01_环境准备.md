@@ -30,7 +30,7 @@ user_id,item_id,behavior_type,user_geohash,item_category,time
 96610296,161166643,1,,3064,2014-12-11 23
 ```
 &emsp;&emsp;⑥ 将文件上传到本地虚拟机中
-![上传文件到虚拟机](../img/上传文件.png)
+![上传文件到虚拟机](../img/上传文件.png)  
 &emsp;&emsp;⑦ 使用命令去掉文件的第一行
 ```shell
 sed -i "1d" taoBaoUserBehavior.csv
