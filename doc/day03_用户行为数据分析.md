@@ -59,10 +59,33 @@ from user_behavior01
 group by ymd
 order by ymd ;    
 ```
-
-
-
-
+导出表中数据到本地磁盘，格式要求将字段之间的分隔符为“,”  
+```sql
+insert overwrite local directory "/opt/module/hive/datas"
+    row format delimited fields terminated by ","
+select * from (
+                  select cast(ymd as string) as ymd,cast(PV as string) as pv from day_PV
+                  union
+                  select "日期" as ymd ,"PV" as pv
+                  ) t1
+order by t1.ymd desc ;
+```
+得到数据如下：  
+![导出到CSV的样式](../img/day_PV_csv.png)
+通过BI工具将数据可视化得到如下：  
+![day_PV可视化](../img/day_PV可视化.png)
+**总结**：
+PV数据整体趋势呈现周期性    
+![day_PV_星期信息](../img/day_PV_星期信息.png)  
+在2014.11.18到2014.12.05期间（周期变化和星期几相关）：  
+&emsp;周1到周2，PV呈现下降趋势，周2达到最低点，大概率是开始新的一周的工作，购物欲望和需求逐渐减少；  
+&emsp;周3到周4，PV呈现上升趋势，周4达到最高点，工作两天后，逐渐适应了，购物欲望和需求逐渐回升；  
+&emsp;周4到周天,PV呈现在最高水平附近小范围波动，工作日没有几天了，临近周末的，购物欲望和需求持续旺盛。  
+在2014.12.06到2014.12.18期间（变化和日期相关）：  
+&emsp;2014.12.06到2014.12.12，PV呈现远超平均水平开始增涨，特别在12月10号到12月12号时，增长最快，12号到达峰值。  
+&emsp;2014.12.12到2014.13，PV出现断崖式下跌，回到正常水平。  
+&emsp;其原因是12月12号的”双12“活动的影响。  
+   
 
 
 
